@@ -2,7 +2,7 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { FaCalendarAlt, FaDoorOpen, FaUsers } from 'react-icons/fa'
-import BookablesPage from './components/Bookables/BookablesList'
+import BookablesPage from './components/Bookables/BookablesPage'
 import BookingsPage from './components/Bookings/BookingsPage'
 import UserPage from './components/Users/UserPage'
 import UserPicker from './components/Users/UserPicker'
@@ -41,9 +41,9 @@ function App() {
         </header>
         
       <Switch>
-        <Route path='/bookings' element={<BookingsPage/>}/>
-        <Route path='/bookables' element={<BookablesPage/>}/>
-        <Route path='/users' element={<UserPage/>}/>
+        <Route path='/bookings' component={BookingsPage}/>
+        <Route path='/bookables' component={BookablesPage}/>
+        <Route path='/users' component={UserPage}/>
       </Switch>
 
       </div>

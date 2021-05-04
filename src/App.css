@@ -26,6 +26,13 @@
 .bookables-page{
   color:black;
 }
+.bookables {
+  background-color: ffffff;
+}
+
+.selected {
+  background-color: red;
+}
 
 
 .App-logo {
