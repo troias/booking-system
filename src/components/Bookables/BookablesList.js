@@ -2,9 +2,9 @@ import React from 'react'
 
 const BookablsPage = () => {
     return (
-        <div>
-            
-        </div>
+        <main className="bookables-page">
+            <p> Bookables! </p>
+        </main>
     )
 }
 

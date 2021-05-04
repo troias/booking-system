@@ -10,6 +10,7 @@
 .flex-li {
   flex:  auto;
   list-style: none;
+  
 }
 .btn-header{
   border: none;
@@ -22,8 +23,9 @@
   font-size: 16px;
   border-radius: 8px;
 }
-
-
+.bookables-page{
+  color:black;
+}
 
 
 .App-logo {
