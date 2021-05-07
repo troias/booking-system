@@ -34,6 +34,12 @@
   background-color: red;
 }
 
+.datePicker {
+  display: flex;
+  justify-content: center;
+  
+}
+
 
 .App-logo {
   height: 40vmin;

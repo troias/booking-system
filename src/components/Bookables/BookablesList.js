@@ -1,4 +1,4 @@
-import { useState, Fragment, useReducer } from 'react';
+import { Fragment, useReducer } from 'react';
 import { bookables } from '../../static.json';
 import { FaArrowRight } from "react-icons/fa";
 import  reducer  from './reducer'
@@ -11,7 +11,7 @@ const intialState = {
 }
 
 const BookablesList = () => {
-    
+
     const [state, dispatch ] = useReducer( reducer, intialState)
     const {group, bookableIndex, hasDetails, bookables} = state
     const bookablesInGroup = bookables.filter(x => x.group === group)
