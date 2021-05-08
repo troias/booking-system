@@ -1,29 +1,78 @@
-import { Fragment, useReducer } from 'react';
-import { bookables } from '../../static.json';
-import { FaArrowRight } from "react-icons/fa";
+import { Fragment, useReducer, useEffect, useRef } from 'react';
+import { FaArrowRight,FaSpinner } from "react-icons/fa";
 import  reducer  from './reducer'
+import getData from '../../utils/api'
 
 const intialState = {
-    group: "choose", 
+    group: "Room", 
     bookableIndex: 0,
     hasDetails: false, 
-    bookables
+    bookables: [], 
+    isLoading: true, 
+    error: false, 
+    isPresenting: false
 }
 
 const BookablesList = () => {
 
     const [state, dispatch ] = useReducer( reducer, intialState)
-    const {group, bookableIndex, hasDetails, bookables} = state
+    const {group, bookableIndex, bookables} = state
+    const {hasDetails, isLoading, error, isPresenting} = state
     const bookablesInGroup = bookables.filter(x => x.group === group)
     const groups = [...new Set(bookables.map(x => x.group))]
     const bookable = bookablesInGroup[bookableIndex];
 
+    let timerRef = useRef(null)
 
+    useEffect(() => {
+        if (isPresenting) {
+            scheduleNext()
+        } else {
+            clearNextTimeOut()
+        }
+    })
+
+    useEffect(() => {
+
+        dispatch({
+            type: "FETCH_BOOKABLES_REQUEST"
+        })
+
+        getData("http://localhost:3001/bookables")
+        .then(resp => dispatch({ 
+            type: "FETCH_BOOKABLES_SUCCESS", 
+            payload: resp
+        }))
+        .catch(err => dispatch({ 
+            type: "FETCH_BOOKABLES_ERROR", 
+            payload: err
+    }))
+
+    }, [])
+
+    const scheduleNext = () => {
+        if (timerRef.current === null) {
+            timerRef.current = setTimeout(() => {
+                timerRef.current = null
+                dispatch({
+                    type: "NEXT_BOOKABLE", 
+                    payload: true
+                })
+            }, 3000) 
+        }
+    }
+
+  
     const changeGroup = (event) => {
       dispatch({
           type: "SET_GROUP",
           payload: event.target.value
       })
+
+      if (isPresenting) {
+          clearNextTimeOut()
+          scheduleNext()
+      }
     }
 
     const changeBookable = (selectedIndex) => {
@@ -35,7 +84,8 @@ const BookablesList = () => {
  
     const nextBookable = () => {
        dispatch({
-           type: "NEXT_BOOKABLE"
+           type: "NEXT_BOOKABLE",
+           payload: false
        })
     }
 
@@ -43,6 +93,22 @@ const BookablesList = () => {
         dispatch({
             type: "TOGGLE_HAS_DETAILS"
         })
+    }
+
+    let clearNextTimeOut = () => {
+        clearTimeout(timerRef.current)
+        timerRef.current = null
+    }
+
+
+    if (error) {
+        return <p> {error.message} </p>
+    }
+
+    if (isLoading) {
+        return <p><FaSpinner className="icon-loading" />
+       
+        </p>
     }
 
     return (

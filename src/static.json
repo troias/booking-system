@@ -1,55 +1,18 @@
 {
-    "bookables": [
-        { 
-        "id": 3, 
-        "group": "Rooms", 
-        "title": "Games Room", 
-        "notes": "Table tennis, table football, pinball! Please tidy up!", 
-        "sessions": ["Morning", "Evening", "Afternoon"], 
-        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] 
-       },
-       { 
-        "id": 1, 
-        "group": "Rooms", 
-        "title": "Gym Room", 
-        "notes": "Weights", 
-        "sessions": ["Morning", "Evening", "Afternoon"], 
-        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] 
-       }, 
-       { 
-        "id": 2, 
-        "group": "Rooms", 
-        "title": "Dance Room", 
-        "notes": "Rave room", 
-        "sessions": ["Morning", "Evening", "Afternoon"], 
-        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] 
-       },
-       { 
-        "id": 4, 
-        "group": "Kit", 
-        "title": "Boxing Pads", 
-        "notes": "Thai", 
-        "sessions": ["Morning", "Evening", "Afternoon"], 
-        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] 
-       }
-    ],
-    "users": [], 
-    "bookings": [], 
-    "sessions": [
-        "Breakfast", 
-        "Morning", 
-        "Lunch", 
-        "Afternoon", 
+     "sessions": [
+        "Breakfast",
+        "Morning",
+        "Lunch",
+        "Afternoon",
         "Evening"
-    ], 
-
+    ],
     "days": [
-        "Sunday", 
-        "Monday", 
-        "Tuesday", 
-        "Wednesday", 
-        "Thursday", 
-        "Friday", 
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
         "Saturday"
     ]
 }

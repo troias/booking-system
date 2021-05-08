@@ -4,13 +4,13 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'NEXT_WEEK':
             return getWeek(state.date, 7)
-        case "PREV_WEEK": 
+        case "PREV_WEEK":
             return getWeek(state.date, -7)
-        case "TODAY": 
+        case "TODAY":
             return getWeek(new Date())
-        case "SET_DATE": 
+        case "SET_DATE":
             return getWeek(new Date(action.payload))
-        default: 
+        default:
             throw new Error(`Unkown action type: ${action.type}`)
     }
 }

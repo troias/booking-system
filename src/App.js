@@ -1,6 +1,6 @@
 
 import './App.css';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { FaCalendarAlt, FaDoorOpen, FaUsers } from 'react-icons/fa'
 import BookablesPage from './components/Bookables/BookablesPage'
@@ -24,9 +24,9 @@ function App() {
   return (
     <Router>
       <div className="App">
-       
-          
-      
+
+
+
         <header>
           <nav  >
             <ul className='flex'>
@@ -51,17 +51,18 @@ function App() {
             </ul>
           </nav>
           <button onClick={updateHandler}>
-          change Title
+            change Title
           </button>
           <UserPicker />
-          <WindowSize/>
+          <WindowSize />
+          <UserStorage/>
         </header>
-        
-      <Switch>
-        <Route path='/bookings' component={BookingsPage}/>
-        <Route path='/bookables' component={BookablesPage}/>
-        <Route path='/users' component={UserPage}/>
-      </Switch>
+
+        <Switch>
+          <Route path='/bookings' component={BookingsPage} />
+          <Route path='/bookables' component={BookablesPage} />
+          <Route path='/users' component={UserPage} />
+        </Switch>
 
       </div>
     </Router>
@@ -72,16 +73,40 @@ function App() {
 
 const getSize = () => {
   return {
-    width: window.innerWidth, 
+    width: window.innerWidth,
     height: window.innerHeight
   }
 }
 
+const UserStorage = () => {
+  const [user, setUser] = useState("troy")
+
+  useEffect(() => {
+    const storedUser = window.localStorage.getItem('user')
+    if (storedUser) {
+      setUser(storedUser)
+    }
+  }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem('user', user)
+  }, [user])
+
+  return (
+    <select value={user} onChange={e => setUser(e.target.value)}>
+      <option>Jason</option>
+      <option>Clarisse</option>
+      <option>Sanjiv</option>
+    </select>
+  )
+
+}
+
 const WindowSize = () => {
-  const [ size, setSize ] = useState(getSize())
+  const [size, setSize] = useState(getSize())
 
 
-  useEffect(()=> {
+  useEffect(() => {
     const handleResize = () => {
       setSize(getSize())
     }
