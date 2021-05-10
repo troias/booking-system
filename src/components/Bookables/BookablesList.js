@@ -1,28 +1,20 @@
 import { Fragment, useReducer, useEffect, useRef } from 'react';
 import { FaArrowRight,FaSpinner } from "react-icons/fa";
-import  reducer  from './reducer'
+
 import getData from '../../utils/api'
 
-const intialState = {
-    group: "Room", 
-    bookableIndex: 0,
-    hasDetails: false, 
-    bookables: [], 
-    isLoading: true, 
-    error: false, 
-    isPresenting: false
-}
 
-const BookablesList = () => {
+const BookablesList = (props) => {
 
-    const [state, dispatch ] = useReducer( reducer, intialState)
+    const {state, dispatch} = props
     const {group, bookableIndex, bookables} = state
-    const {hasDetails, isLoading, error, isPresenting} = state
+    const { isLoading, error, isPresenting} = state
+    
     const bookablesInGroup = bookables.filter(x => x.group === group)
     const groups = [...new Set(bookables.map(x => x.group))]
-    const bookable = bookablesInGroup[bookableIndex];
-
+ 
     let timerRef = useRef(null)
+    const nextButtonRef = useRef()
 
     useEffect(() => {
         if (isPresenting) {
@@ -48,7 +40,7 @@ const BookablesList = () => {
             payload: err
     }))
 
-    }, [])
+    }, [dispatch])
 
     const scheduleNext = () => {
         if (timerRef.current === null) {
@@ -80,6 +72,7 @@ const BookablesList = () => {
             type: "SET_BOOKABLE",
             payload: selectedIndex
         })
+        nextButtonRef.current.focus()
     }
  
     const nextBookable = () => {
@@ -89,11 +82,6 @@ const BookablesList = () => {
        })
     }
 
-    const toggleDetails = () => {
-        dispatch({
-            type: "TOGGLE_HAS_DETAILS"
-        })
-    }
 
     let clearNextTimeOut = () => {
         clearTimeout(timerRef.current)
@@ -112,7 +100,7 @@ const BookablesList = () => {
     }
 
     return (
-        <Fragment>
+      
             <div>
                 <select name=" " id=" "
                     value={group}
@@ -140,6 +128,7 @@ const BookablesList = () => {
                     <button
                         className="btn"
                         onClick={nextBookable}
+                        ref={nextButtonRef}
                         autoFocus
                     >
                         <FaArrowRight />
@@ -147,48 +136,8 @@ const BookablesList = () => {
                     </button>
                 </p>
             </div>
-            {bookable && (
-                <div className="bookable-details">
-                    <div className="item">
-                        <div className="item-header">
-                            <h2>
-                                {bookable.title}
-                                
-                            </h2>
-                            <span className="controls">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={hasDetails}
-                                        onChange={toggleDetails}
-                                    />
-                                Show Details
-                                </label>
-                            </span>
-                        </div>
-                        <p>{bookable.notes}</p>
-                        {hasDetails && (
-                            <div className="item-details">
-                                <h3>Availability</h3>
-                                <div className="bookable-availability">
-                                    <ul>
-                                        { bookable.days
-                                            .sort()
-                                            .map(d => <li key={d}>{d}</li>)
-                                        }
-                                    </ul>
-                                    <ul>
-                                        { bookable.sessions
-                                            .map(s => <li key={s}>{s}</li>)
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-        </Fragment>
+  
+      
     )
 }
 
